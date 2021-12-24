@@ -13,9 +13,7 @@ public class Main {
 
 
     public static double forintToCrones(double forintCount) {
-        //double forintPrice = getCourseFromFile().get("forint");
-        //double cronesPrice = getCourseFromFile().get("crones");
-        //return forintPrice * forintCount / cronesPrice;
+
         return 0;
     }
 

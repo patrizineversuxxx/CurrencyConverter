@@ -1,4 +1,4 @@
-package study;
+package converter;
 
 import org.xml.sax.SAXException;
 

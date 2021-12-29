@@ -2,10 +2,10 @@ package сonverter;
 
 import java.util.HashMap;
 
-public class Converter {
+public class CurrencyConverter {
     private HashMap <String, Double> excangeRates;
 
-    public Converter(HashMap<String, Double> excangeRates) {
+    public CurrencyConverter(HashMap<String, Double> excangeRates) {
         this.excangeRates = excangeRates;
     }
 

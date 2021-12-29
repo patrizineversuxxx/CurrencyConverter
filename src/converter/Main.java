@@ -4,7 +4,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -26,7 +25,7 @@ public class Main {
         var exchangeRates = parser.parse(stream);
         stream.close();
 
-        var converter = new Converter(exchangeRates);
+        var converter = new CurrencyConverter(exchangeRates);
         var result = converter.convert(originCurrency, targetCurrency, amount);
         var message = MessageFormat.format("{0} {1} = {2} {3}", amount, originCurrency, result, targetCurrency);
         System.out.println(message);

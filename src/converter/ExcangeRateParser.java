@@ -13,9 +13,14 @@ import java.util.Locale;
 
 public class ExcangeRateParser {
 
-    public ExcangeRateParser() {}
+    private NumberFormat format;
 
-    public HashMap<String, Double> parse(InputStream stream, Locale locale) throws ParserConfigurationException, IOException, SAXException, ParseException {
+
+    public ExcangeRateParser(Locale locale) {
+        this.format = NumberFormat.getInstance(locale);
+    }
+
+    public HashMap<String, Double> parse(InputStream stream) throws ParserConfigurationException, IOException, SAXException, ParseException {
         var exchangeRates = new HashMap<String, Double>();
         var factory = DocumentBuilderFactory.newInstance();
         var builder = factory.newDocumentBuilder();
@@ -35,7 +40,6 @@ public class ExcangeRateParser {
 
             var valueNode = currencyElement.getElementsByTagName("Value").item(0);
             var stringValue = valueNode.getTextContent();
-            var format = NumberFormat.getInstance(locale);
             var value = (Double) format.parse(stringValue) / amount;
 
             exchangeRates.put(charCode, value);

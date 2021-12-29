@@ -3,8 +3,10 @@ package сonverter;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -17,10 +19,12 @@ public class Main {
         var targetCurrency = "NOK";
         var amount = 1;
 
-        var parser = new ExcangeRateParser();
-        var stream = new FileInputStream("src/converter/courses.xml");
         var locale = Locale.getDefault();
-        var exchangeRates = parser.parse(stream, locale);
+        var parser = new ExcangeRateParser(locale);
+        var stream = new BufferedInputStream(new URL("http://www.cbr.ru/scripts/XML_daily.asp").openStream());
+
+        var exchangeRates = parser.parse(stream);
+        stream.close();
 
         var converter = new Converter(exchangeRates);
         var result = converter.convert(originCurrency, targetCurrency, amount);

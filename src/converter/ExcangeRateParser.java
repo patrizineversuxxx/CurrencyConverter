@@ -40,7 +40,6 @@ public class ExcangeRateParser {
 
             exchangeRates.put(charCode, value);
         }
-        System.out.println(exchangeRates.get("NOK"));
         return exchangeRates;
     }
 }

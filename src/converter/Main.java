@@ -4,6 +4,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -21,6 +23,8 @@ public class Main {
         var locale = Locale.getDefault();
         var parser = new ExcangeRateParser(locale);
         var stream = new BufferedInputStream(new URL("http://www.cbr.ru/scripts/XML_daily.asp").openStream());
+        //var stream = new BufferedInputStream(new URL("file:///F:\\Projects\\IdeaProjects\\src\\converter\\courses.xml").openStream());
+
 
         var exchangeRates = parser.parse(stream);
         stream.close();

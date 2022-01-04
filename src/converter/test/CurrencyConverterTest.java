@@ -20,9 +20,6 @@ class CurrencyConverterTest {
         exchangeRates.put("SHR", 5.0);
         exchangeRates.put("RUB", 1.0);
         exchangeRates.put("HEH", 2.0);
-        exchangeRates.put("ZRO", 0.0);
-        exchangeRates.put("NEG", -1.0);
-        exchangeRates.put("INF", Double.POSITIVE_INFINITY);
         return exchangeRates;
     }
 

@@ -53,6 +53,7 @@ class CurrencyConverterTest {
     @Test
     void converterConstructorThrowsIllegalArgumentExceptionForInvalidMap() {
         assertThrows(IllegalArgumentException.class, () -> new CurrencyConverter(buildInvalidExchangeRatesMap()));
+        assertThrows(NullPointerException.class, () -> new CurrencyConverter(null));
     }
 
     @Test
@@ -72,6 +73,7 @@ class CurrencyConverterTest {
     @Test
     void converterThrowsIllegalArgumentExceptionForInvalidCurrency() {
         var currencyConverter = new CurrencyConverter(buildValidExchangeRatesMap());
+        assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert(null, null, 1));
         assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("SEX", "HEH", 1));
         assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("HEH", "SEX", 1));
         assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("XES", "SEX", 1));
@@ -81,5 +83,8 @@ class CurrencyConverterTest {
     void converterThrowsIllegalArgumentExceptionForInvalidAmount() {
         var currencyConverter = new CurrencyConverter(buildValidExchangeRatesMap());
         assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("KEK", "SHR", -1));
+        assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("KEK", "SHR", Double.POSITIVE_INFINITY));
+        assertThrows(IllegalArgumentException.class, () -> currencyConverter.convert("KEK", "SHR", Double.NaN));
     }
+
 }

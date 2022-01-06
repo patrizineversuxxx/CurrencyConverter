@@ -2,6 +2,7 @@ package сonverter;
 
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -11,12 +12,12 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class ExcangeRateParser {
+public class ExchangeRateParser {
 
     private NumberFormat format;
 
 
-    public ExcangeRateParser(Locale locale) {
+    public ExchangeRateParser(Locale locale) {
         this.format = NumberFormat.getInstance(locale);
     }
 

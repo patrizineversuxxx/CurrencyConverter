@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -60,10 +61,12 @@ public class Main {
             var result = converter.convert(originCurrency, targetCurrency, amount);
             var message = MessageFormat.format("{0} {1} = {2} {3}", amount, originCurrency, result, targetCurrency);
             System.out.println(message);
+        } catch (FileNotFoundException e) {
+            System.out.println("Configuration file not found!");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         } catch (IOException | ParserConfigurationException | ParseException | SAXException e) {
-            System.out.println("File not found!");
+            System.out.println("Exchange rates file not found!");
         }
     }
 }

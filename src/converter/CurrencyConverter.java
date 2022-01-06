@@ -26,10 +26,10 @@ public class CurrencyConverter {
 
     public double convert(String originCurrency, String targetCurrency, double amount) {
         if (!isValidAmount(amount))
-            throw new IllegalArgumentException("Invalid amount");
+            throw new IllegalArgumentException("Invalid amount!");
 
         if (!excangeRates.containsKey(originCurrency) || !excangeRates.containsKey(targetCurrency))
-            throw new IllegalArgumentException("Currency value not exist");
+            throw new IllegalArgumentException("Currency value not exist!");
 
         var originCurrencyValue = excangeRates.get(originCurrency);
         var targetCurrencyValue = excangeRates.get(targetCurrency);

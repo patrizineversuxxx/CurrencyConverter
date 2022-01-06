@@ -1,25 +1,31 @@
 package сonverter.test;
 
 import org.junit.jupiter.api.Test;
+import org.xml.sax.SAXParseException;
 import сonverter.ExchangeRateParser;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExchangeRateParserTest {
-    static InputStream buildStreamForText(String text) throws IOException {
-        return new BufferedInputStream(new URL(text).openStream());
+
+    static InputStream buildStreamForText(String text) {
+        return new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
-    void parserThrowsURLException() {
+    void parserThrowsParseException() {
         var exchangeRateParser = new ExchangeRateParser(Locale.FRENCH);
-        assertThrows(MalformedURLException.class, () -> exchangeRateParser.parse(buildStreamForText("")));
+        assertThrows(SAXParseException.class, () -> exchangeRateParser.parse(buildStreamForText("Welcome to the club, buddy!")));
+    }
+
+    @Test
+    void parserThrowsIllegalArgumentException() {
+        var exchangeRateParser = new ExchangeRateParser(Locale.FRENCH);
+        assertThrows(IllegalArgumentException.class, () -> exchangeRateParser.parse(null));
     }
 }

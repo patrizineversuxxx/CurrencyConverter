@@ -27,30 +27,43 @@ public class Main {
             this.locale = Locale.forLanguageTag(locale);
         }
 
-        public static Configuration parse(FileReader stream) {
+        public static Configuration parse(FileReader stream) throws MalformedURLException {
             var gson = new Gson();
-            var config = gson.fromJson(stream, Configuration.class);
+            Configuration config = gson.fromJson(stream, Configuration.class);
             return config;
         }
     }
 
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, ParseException, IllegalArgumentException {
-        if (args.length < 3) throw new IllegalArgumentException("Not enough arguments");
+    public static void main(String[] args) {
+        if (args.length < 3) throw new IllegalArgumentException("Not enough arguments!");
         var originCurrency = args[0];
         var targetCurrency = args[1];
-        var amount = Double.parseDouble(args[2]);
-        var configStream = new FileReader("config.json");
-        var config = Configuration.parse(configStream);
-        configStream.close();
+        var amount = 1.0;
+        try {
+            amount = Double.parseDouble(args[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("Currency amount must be numeric.");
+        }
 
-        var parser = new ExchangeRateParser(config.locale);
-        var stream = new BufferedInputStream(config.apiUrl.openStream());
-        var exchangeRates = parser.parse(stream);
-        stream.close();
+        try {
+            var configStream = new FileReader("config.json");
 
-        var converter = new CurrencyConverter(exchangeRates);
-        var result = converter.convert(originCurrency, targetCurrency, amount);
-        var message = MessageFormat.format("{0} {1} = {2} {3}", amount, originCurrency, result, targetCurrency);
-        System.out.println(message);
+            var config = Configuration.parse(configStream);
+            configStream.close();
+
+            var parser = new ExchangeRateParser(config.locale);
+            var stream = new BufferedInputStream(config.apiUrl.openStream());
+            var exchangeRates = parser.parse(stream);
+            stream.close();
+
+            var converter = new CurrencyConverter(exchangeRates);
+            var result = converter.convert(originCurrency, targetCurrency, amount);
+            var message = MessageFormat.format("{0} {1} = {2} {3}", amount, originCurrency, result, targetCurrency);
+            System.out.println(message);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException | ParserConfigurationException | ParseException | SAXException e) {
+            System.out.println("File not found!");
+        }
     }
 }

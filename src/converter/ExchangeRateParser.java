@@ -42,8 +42,12 @@ public class ExchangeRateParser {
 
             var valueNode = currencyElement.getElementsByTagName("Value").item(0);
             var stringValue = valueNode.getTextContent();
-            var value = (Double) format.parse(stringValue) / amount;
-
+            var value = 0.0;
+            try {
+                value = (Double) format.parse(stringValue) / amount;
+            } catch (NumberFormatException e) {
+                System.out.println("Set right locale in config file!");
+            }
             exchangeRates.put(charCode, value);
         }
         return exchangeRates;

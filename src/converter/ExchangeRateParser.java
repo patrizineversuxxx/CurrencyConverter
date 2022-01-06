@@ -25,6 +25,7 @@ public class ExchangeRateParser {
         var exchangeRates = new HashMap<String, Double>();
         var factory = DocumentBuilderFactory.newInstance();
         var builder = factory.newDocumentBuilder();
+
         var document = builder.parse(stream);
 
         var currencyList = document.getElementsByTagName("Valute");

@@ -1,7 +1,6 @@
 package сonverter;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import org.xml.sax.SAXException;
 
@@ -25,13 +24,11 @@ public class Main {
 
         public Configuration(String url, String locale) throws MalformedURLException {
             this.apiUrl = new URL(url);
-            this.locale = new Locale.Builder().setLanguageTag(locale).build();
+            this.locale = Locale.forLanguageTag(locale);
         }
 
         public static Configuration parse(FileReader stream) {
-            var gsonBuilder = new GsonBuilder();
-            gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
-            var gson = gsonBuilder.create();
+            var gson = new Gson();
             var config = gson.fromJson(stream, Configuration.class);
             return config;
         }
